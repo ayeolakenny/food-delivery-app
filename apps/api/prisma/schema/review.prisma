@@ -1,0 +1,15 @@
+model Review {
+  id               String     @id @default(uuid()) @db.Uuid
+  comment          String
+  restaurantRating Float
+  driverRating     Float?
+  createdAt        DateTime   @default(now())
+  restaurant       Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId     String     @db.Uuid
+  order            Order      @relation(fields: [orderId], references: [id])
+  orderId          String     @db.Uuid
+  customer         User       @relation("CustomerReviews", fields: [customerId], references: [id])
+  customerId       String     @db.Uuid
+  driver           User       @relation("DriverReviews", fields: [driverId], references: [id])
+  driverId         String     @db.Uuid
+}

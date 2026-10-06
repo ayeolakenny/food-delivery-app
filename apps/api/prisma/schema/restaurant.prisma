@@ -1,0 +1,19 @@
+model Restaurant {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  description String?
+  imageUrl    String?
+  address     String
+  cuisineType String
+  isOpen      Boolean  @default(false)
+  rating      String?  @default("0")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  reviews        Review[]
+  menuCategories MenuCategory[]
+  menuItems      MenuItem[]
+  orders         Order[]
+  owner          User           @relation(fields: [ownerId], references: [id])
+  ownerId        String         @db.Uuid
+}

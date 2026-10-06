@@ -1,0 +1,23 @@
+enum Role {
+  DRIVER
+  CUSTOMER
+  RESTAURANT_OWNER
+}
+
+model User {
+  id              String       @id @default(uuid()) @db.Uuid
+  firstName       String
+  lastName        String
+  email           String       @unique
+  password        String
+  role            Role         @default(CUSTOMER)
+  pushToken       String?
+  isOnline        Boolean      @default(false)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  customerReviews Review[]     @relation("CustomerReviews")
+  deiverReviews   Review[]     @relation("DriverReviews")
+  restaurants     Restaurant[]
+  customerOrders  Order[]      @relation("CustomerOrders")
+  driverOrders    Order[]      @relation("DriverOrders")
+}

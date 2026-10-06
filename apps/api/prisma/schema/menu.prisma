@@ -1,0 +1,24 @@
+model MenuCategory {
+  id           String     @id @default(uuid()) @db.Uuid
+  name         String
+  createdAt    DateTime   @default(now())
+  menuItems    MenuItem[]
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId String     @db.Uuid
+}
+
+model MenuItem {
+  id           String       @id @default(uuid()) @db.Uuid
+  name         String
+  description  String?
+  price        Float
+  imageUrl     String?
+  isAvailable  Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  orderItems   OrderItem[]
+  category     MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId   String       @db.Uuid
+  restaurant   Restaurant   @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurantId String       @db.Uuid
+}
