@@ -2,7 +2,7 @@ import {
 	registerSchema,
 	RegisterInput,
 	useRegisterMutation,
-} from "@/api/auth.ts";
+} from "@/api/auth";
 import { ROLES } from "@/api/types";
 import { useAuth } from "@/context/auth-context";
 import { UserRole } from "@food-delivery/types";

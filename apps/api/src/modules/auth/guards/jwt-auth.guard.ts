@@ -1,16 +1,14 @@
-import { JwtPayload } from '@food-delivery/types';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { bad } from '../../../utils/error.utils';
+import type { AuthenticatedRequest, IAuthUser } from '../auth.types';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const request = context
-      .switchToHttp()
-      .getRequest<Request & { user: JwtPayload }>();
+    const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
 
     const authHeader = request.headers['authorization'];
     if (!authHeader) bad('No token provided', 401);
@@ -19,10 +17,10 @@ export class JwtAuthGuard implements CanActivate {
     if (!token) bad('Invalid token format', 401);
 
     try {
-      const payload = this.jwtService.verify<JwtPayload>(token);
+      const payload = this.jwtService.verify<IAuthUser>(token);
       request.user = payload;
       return true;
-    } catch (e) {
+    } catch {
       bad('Invalid or expired token', 401);
     }
   }

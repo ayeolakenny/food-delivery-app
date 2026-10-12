@@ -1,4 +1,4 @@
-import { loginSchema, LoginInput, useLoginMutation } from "@/api/auth.ts";
+import { loginSchema, LoginInput, useLoginMutation } from "@/api/auth";
 import { useAuth } from "@/context/auth-context";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { isAxiosError } from "axios";

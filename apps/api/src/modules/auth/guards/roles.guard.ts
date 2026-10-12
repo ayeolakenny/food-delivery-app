@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Role } from '@prisma/client';
 import { ROLE_KEY } from '../decorators/role.decorator';
-import { JwtPayload } from '@food-delivery/types';
+import type { AuthenticatedRequest } from '../auth.types';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -15,9 +15,7 @@ export class RolesGuard implements CanActivate {
     ]);
     if (!requiredRoles) return true;
 
-    const { user } = context
-      .switchToHttp()
-      .getRequest<Request & { user: JwtPayload }>();
+    const { user } = context.switchToHttp().getRequest<AuthenticatedRequest>();
 
     return requiredRoles.includes(user.role as Role);
   }

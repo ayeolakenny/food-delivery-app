@@ -5,19 +5,20 @@ enum Role {
 }
 
 model User {
-  id              String       @id @default(uuid()) @db.Uuid
+  id              String      @id @default(uuid()) @db.Uuid
   firstName       String
   lastName        String
-  email           String       @unique
+  email           String      @unique
   password        String
-  role            Role         @default(CUSTOMER)
+  role            Role        @default(CUSTOMER)
   pushToken       String?
-  isOnline        Boolean      @default(false)
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-  customerReviews Review[]     @relation("CustomerReviews")
-  deiverReviews   Review[]     @relation("DriverReviews")
-  restaurants     Restaurant[]
-  customerOrders  Order[]      @relation("CustomerOrders")
-  driverOrders    Order[]      @relation("DriverOrders")
+  isOnline        Boolean     @default(false)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  customerReviews Review[]    @relation("CustomerReviews")
+  deiverReviews   Review[]    @relation("DriverReviews")
+  restaurants     Restaurant?
+  customerOrders  Order[]     @relation("CustomerOrders")
+  driverOrders    Order[]     @relation("DriverOrders")
+  uploads         Upload[]
 }

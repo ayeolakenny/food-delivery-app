@@ -2,7 +2,6 @@ model Restaurant {
   id          String   @id @default(uuid()) @db.Uuid
   name        String
   description String?
-  imageUrl    String?
   address     String
   cuisineType String
   isOpen      Boolean  @default(false)
@@ -14,6 +13,8 @@ model Restaurant {
   menuCategories MenuCategory[]
   menuItems      MenuItem[]
   orders         Order[]
+  image          Upload?         @relation(fields: [imageId], references: [id])
+  imageId        String?         @unique @db.Uuid
   owner          User           @relation(fields: [ownerId], references: [id])
-  ownerId        String         @db.Uuid
+  ownerId        String         @unique @db.Uuid
 }
