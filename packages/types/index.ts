@@ -28,7 +28,7 @@ export interface Restaurant {
   id: string;
   name: string;
   description: string | null;
-  imageUrl: string | null;
+  imageId: string | null;
   address: string;
   cuisineType: string;
   isOpen: boolean;

@@ -66,12 +66,30 @@ export class RestaurantService {
 
     const { uploadId, ...rest } = dto;
 
-    const updated = await this.prisma.restaurant.update({
-      where: { id },
-      data: {
-        ...rest,
-        image: uploadId ? connectId(uploadId) : undefined,
-      },
+    if (uploadId) {
+      const upload = await this.prisma.upload.findFirst({
+        where: { id: uploadId, userId: user.sub },
+      });
+      if (!upload) bad('Image not found', 404);
+    }
+
+    const oldImageId = restaurant.imageId;
+    const isReplacingImage = !!uploadId && uploadId !== oldImageId;
+
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const updated = await tx.restaurant.update({
+        where: { id },
+        data: {
+          ...rest,
+          image: uploadId ? connectId(uploadId) : undefined,
+        },
+      });
+
+      if (isReplacingImage && oldImageId) {
+        await tx.upload.deleteMany({ where: { id: oldImageId } });
+      }
+
+      return updated;
     });
 
     return updated;

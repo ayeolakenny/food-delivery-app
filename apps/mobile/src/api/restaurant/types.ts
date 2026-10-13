@@ -2,7 +2,7 @@ export interface Restaurant {
   id: string;
   name: string;
   description: string | null;
-  imageUrl: string | null;
+  imageId: string | null;
   address: string;
   cuisineType: string;
   isOpen: boolean;
@@ -13,10 +13,19 @@ export interface Restaurant {
 
 export interface UpdateRestaurantInput {
   id: string;
+  uploadId?: string;
   name?: string;
   description?: string | null;
   address?: string;
   cuisineType?: string;
   imageUrl?: string | null;
   isOpen?: boolean;
+}
+
+export interface CreateRestaurantInput {
+  uploadId?: string;
+  name: string;
+  description?: string | null;
+  address: string;
+  cuisineType: string;
 }

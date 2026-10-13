@@ -1,22 +1,33 @@
-import { View, Text, StyleSheet } from 'react-native'
+import AddCategoryModal from "@/components/custom/AddCategoryModal";
+import { Button } from "@/components/ui/button";
+import { usePopup } from "@/context/popup-context";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function OwnerHomeScreen() {
+export default function MenuScreen() {
+	const { openModal } = usePopup();
 	return (
-		<View style={styles.container}>
-			<Text style={styles.text}>Owner Menu Screen</Text>
-		</View>
-	)
+		<SafeAreaView style={styles.container} edges={["top"]}>
+			<Button
+				label="+Add Category"
+				style={styles.addButton}
+				textStyle={styles.addButtonText}
+				onPress={() => openModal(<AddCategoryModal />)}
+			/>
+		</SafeAreaView>
+	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
+		backgroundColor: "#fff",
 	},
-	text: {
-		fontSize: 24,
-		fontWeight: '700',
-	}
-})
-
+	addButton: {
+		marginHorizontal: 16,
+	},
+	addButtonText: {
+		color: "#FFF",
+		fontSize: 15,
+	},
+});

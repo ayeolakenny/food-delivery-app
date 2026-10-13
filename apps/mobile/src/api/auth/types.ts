@@ -1,6 +1,6 @@
 import { User } from "@food-delivery/types";
 import { z } from "zod";
-import { loginSchema, registerSchema } from "./schemas";
+import { loginSchema, registerSchema } from "./schema";
 
 export type RegisterInput = z.infer<typeof registerSchema>;
 

@@ -1,3 +1,4 @@
+import type { AxiosRequestConfig } from "axios";
 import { api } from "./axios";
 
 export const fetcher = {
@@ -5,8 +6,8 @@ export const fetcher = {
     const res = await api.get<T>(url, { params });
     return res.data as T;
   },
-  post: async <T = any>(url: string, body?: object) => {
-    const res = await api.post<T>(url, body);
+  post: async <T = any>(url: string, body?: object, config?: AxiosRequestConfig) => {
+    const res = await api.post<T>(url, body, config);
     return res.data as T;
   },
   put: async <T = any>(url: string, body?: object) => {

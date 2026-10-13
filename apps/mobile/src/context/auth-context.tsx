@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 interface AuthContextType {
   user: User | null;
+  token: string | null;
   isLoading: boolean;
   logout: () => Promise<void>;
   setSession: (session: { user: User; token: string }) => Promise<void>;
@@ -14,6 +15,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -26,6 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (token) {
         const res = await api.get("/auth/me");
         setUser(res.data);
+        setToken(token);
       }
     } catch (e) {
       await deleteToken();
@@ -37,16 +40,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   async function logout() {
     await deleteToken();
     setUser(null);
+    setToken(null);
   }
 
   async function setSession(session: { user: User; token: string }) {
     await saveToken(session.token);
     setUser(session.user);
+    setToken(session.token);
   }
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, logout, setSession }}
+      value={{ user, token, isLoading, logout, setSession }}
     >
       {children}
     </AuthContext.Provider>

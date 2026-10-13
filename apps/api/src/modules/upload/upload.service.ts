@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { IAuthUser } from '../auth/auth.types';
 import { connectId } from '../../services/prisma/prisma.util';
 import { PrismaService } from '../../services/prisma/prisma.service';
+import { bad } from '../../utils/error.utils';
 
 @Injectable()
 export class UploadService {
@@ -19,13 +20,16 @@ export class UploadService {
       },
     });
 
-    return {id: upload.id };
+    return { id: upload.id };
   }
 
   async getFile(id: string) {
-    return await this.prisma.upload.findUnique({
+    const file = await this.prisma.upload.findUnique({
       where: { id },
     });
+
+    if (!file) bad('File not found', 404);
+    return file;
   }
 
   async delete(ids: string[], user: IAuthUser) {

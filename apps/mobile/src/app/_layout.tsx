@@ -6,6 +6,7 @@ import { AnimatedSplashOverlay } from "@/components/animated-icon";
 import { AuthProvider, useAuth } from "@/context/auth-context";
 import { UserRole } from "@food-delivery/types";
 import { queryClient } from "@/api/client";
+import { PopupProvider } from "@/context/popup-context";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -47,8 +48,10 @@ export default function TabLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <AnimatedSplashOverlay />
-        <RootNavigator />
+        <PopupProvider>
+          <AnimatedSplashOverlay />
+          <RootNavigator />
+        </PopupProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

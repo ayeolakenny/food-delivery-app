@@ -1,5 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Restaurant, UpdateRestaurantInput } from "./types";
+import {
+  CreateRestaurantInput,
+  Restaurant,
+  UpdateRestaurantInput,
+} from "./types";
 import { restaurantService } from "./service";
 import { queryClient } from "../client";
 
@@ -15,6 +19,15 @@ export const useUpdateRestaurantMutation = () => {
     mutationFn: restaurantService.updateRestaurant,
     onSuccess: (updated) => {
       queryClient.setQueryData(["my-restaurant"], updated);
+    },
+  });
+};
+
+export const useCreateRestaurantMutation = () => {
+  return useMutation<Restaurant, Error, CreateRestaurantInput>({
+    mutationFn: restaurantService.createRestaurant,
+    onSuccess: (created) => {
+      queryClient.setQueryData(["my-restaurant"], created);
     },
   });
 };

@@ -6,6 +6,7 @@ import { PrismaModule } from './services/prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { RestaurantModule } from './modules/restaurant/restaurant.module';
+import { MenuModule } from './modules/menu/menu.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { RestaurantModule } from './modules/restaurant/restaurant.module';
     AuthModule,
     PrismaModule,
     UploadModule,
+    MenuModule,
     RestaurantModule,
   ],
   controllers: [AppController],

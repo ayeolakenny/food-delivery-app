@@ -1,6 +1,6 @@
 import { Restaurant } from "@food-delivery/types";
 import { fetcher } from "../fetcher";
-import { UpdateRestaurantInput } from "./types";
+import { CreateRestaurantInput, UpdateRestaurantInput } from "./types";
 
 export const restaurantService = {
   myRestaurant: () => {
@@ -9,6 +9,10 @@ export const restaurantService = {
 
   updateRestaurant: async ({id, ...data}: UpdateRestaurantInput) => {
     return fetcher.patch<Restaurant>(`/restaurant/${id}`, data);
+  },
+
+  createRestaurant: async (data: CreateRestaurantInput) => {
+    return await fetcher.post<Restaurant>("/restaurant", data);
   },
 };
 
